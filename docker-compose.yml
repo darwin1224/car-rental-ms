@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:latest
+    container_name: database
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - database:/var/lib/postgresql/data
+    tty: true
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - 80:80
+    tty: true
+    restart: always
+
+volumes:
+  database:
