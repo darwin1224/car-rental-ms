@@ -23,6 +23,10 @@ describe('CarCategoryService', () => {
     carCategoryService = module.get<CarCategoryService>(CarCategoryService);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('getCarCategories()', async () => {
     jest
       .spyOn(paginationRepositoryMock, 'paginate')
@@ -100,7 +104,7 @@ describe('CarCategoryService', () => {
     );
   });
 
-  it('getCarCategoryById', async () => {
+  it('getCarCategoryById()', async () => {
     jest.spyOn(carCategoryRepository, 'findOne').mockImplementationOnce(id => {
       return Promise.resolve({
         id: id as number,

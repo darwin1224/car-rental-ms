@@ -6,7 +6,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-describe('Supplier Controller', () => {
+describe('SupplierController', () => {
   let configService: ConfigService;
   let supplierService: SupplierService;
   let supplierController: SupplierController;

@@ -23,6 +23,10 @@ describe('SupplierService', () => {
     supplierService = module.get<SupplierService>(SupplierService);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('getSuppliers()', async () => {
     jest
       .spyOn(paginationRepositoryMock, 'paginate')
@@ -106,7 +110,7 @@ describe('SupplierService', () => {
     );
   });
 
-  it('getSupplierById', async () => {
+  it('getSupplierById()', async () => {
     jest.spyOn(supplierRepository, 'findOne').mockImplementationOnce(id => {
       return Promise.resolve({
         id: id as number,

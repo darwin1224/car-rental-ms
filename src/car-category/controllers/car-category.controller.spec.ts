@@ -6,7 +6,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-describe('CarCategory Controller', () => {
+describe('CarCategoryController', () => {
   let configService: ConfigService;
   let carCategoryService: CarCategoryService;
   let carCategoryController: CarCategoryController;
