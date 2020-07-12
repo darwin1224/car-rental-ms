@@ -64,7 +64,7 @@ describe('Supplier Controller', () => {
       });
     jest
       .spyOn(configService, 'get')
-      .mockImplementationOnce(() => 'http://localhost:3000');
+      .mockImplementationOnce(() => 'http://localhost:3000/v1/api');
 
     const expected = await supplierController.index(1, 10);
 
@@ -72,7 +72,7 @@ describe('Supplier Controller', () => {
     expect(supplierService.getSuppliers).toHaveBeenCalledWith({
       page: 1,
       limit: 10,
-      route: 'http://localhost:3000/suppliers',
+      route: 'http://localhost:3000/v1/api/suppliers',
     });
     expect(configService.get).toHaveBeenCalledTimes(1);
     expect(Object.keys(expected).sort()).toEqual(

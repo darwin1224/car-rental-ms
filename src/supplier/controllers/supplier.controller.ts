@@ -29,8 +29,8 @@ export class SupplierController {
     @Query('limit') limit = 10,
   ): Promise<Pagination<Supplier>> {
     return this.supplierService.getSuppliers({
-      page,
-      limit,
+      page: Number(page),
+      limit: Number(limit),
       route: `${this.configService.get('APP_BASE_URL')}/suppliers`,
     });
   }
