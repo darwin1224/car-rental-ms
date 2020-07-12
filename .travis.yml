@@ -10,5 +10,5 @@ install:
 script:
   - yarn format
   - yarn lint
-  - yarn test
+  - yarn test:unit
   - yarn build
