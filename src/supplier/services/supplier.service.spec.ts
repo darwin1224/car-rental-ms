@@ -40,15 +40,13 @@ describe('SupplierService', () => {
           ],
           meta: {
             currentPage: page,
-            itemCount: 3,
+            itemCount: 1,
             itemsPerPage: limit,
-            totalItems: 3,
+            totalItems: 1,
             totalPages: 1,
           },
           links: {
-            first: `${route}?page=${
-              page === 1 ? page : page - 1
-            }&limit=${limit}`,
+            first: `${route}?limit=${limit}`,
             last: `${route}?page=${page}&limit=${limit}`,
             next: '',
             previous: '',
@@ -59,7 +57,7 @@ describe('SupplierService', () => {
     const paginationOptions = {
       page: 1,
       limit: 10,
-      route: 'http://localhost:3000/suppliers',
+      route: 'http://localhost:3000/v1/api/suppliers',
     };
     const expected = await supplierService.getSuppliers(paginationOptions);
 
@@ -95,8 +93,16 @@ describe('SupplierService', () => {
     );
     expect(expected.meta.currentPage).toEqual(1);
     expect(expected.meta.itemsPerPage).toEqual(10);
+    expect(expected.meta.itemCount).toEqual(expected.items.length);
+    expect(expected.meta.totalItems).toEqual(expected.items.length);
     expect(Object.keys(expected.links).sort()).toEqual(
       ['first', 'last', 'next', 'previous'].sort(),
+    );
+    expect(expected.links.first).toEqual(
+      'http://localhost:3000/v1/api/suppliers?limit=10',
+    );
+    expect(expected.links.last).toEqual(
+      'http://localhost:3000/v1/api/suppliers?page=1&limit=10',
     );
   });
 
