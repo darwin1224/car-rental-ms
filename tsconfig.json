@@ -23,7 +23,8 @@
       "class-transformer",
       "class-validator",
       "@types/node",
-      "@types/jest"
+      "@types/jest",
+      "@types/supertest"
     ],
     "paths": {
       "@app/*": ["./src/*"]
