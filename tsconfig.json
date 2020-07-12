@@ -14,6 +14,17 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
+    "types": [
+      "@nestjs/typeorm",
+      "@nestjs/platform-express",
+      "@nestjs/config",
+      "nestjs-typeorm-paginate",
+      "typeorm",
+      "class-transformer",
+      "class-validator",
+      "node",
+      "jest"
+    ],
     "paths": {
       "@app/*": ["./src/*"]
     }
