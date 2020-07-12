@@ -22,8 +22,8 @@
       "typeorm",
       "class-transformer",
       "class-validator",
-      "node",
-      "jest"
+      "@types/node",
+      "@types/jest"
     ],
     "paths": {
       "@app/*": ["./src/*"]
