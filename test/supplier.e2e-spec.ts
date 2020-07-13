@@ -41,6 +41,8 @@ describe('SupplierController (e2e)', () => {
   });
 
   afterAll(async () => {
+    await getConnection().dropDatabase();
+    await getConnection().close();
     await app.close();
   });
 
