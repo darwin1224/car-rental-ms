@@ -1,4 +1,4 @@
-import { Supplier } from '@app/supplier/models/supplier';
+import { Supplier } from '@app/supplier/models/supplier.model';
 import { SupplierModule } from '@app/supplier/supplier.module';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';

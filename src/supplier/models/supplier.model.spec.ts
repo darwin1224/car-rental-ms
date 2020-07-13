@@ -1,4 +1,4 @@
-import { Supplier } from './supplier';
+import { Supplier } from './supplier.model';
 
 describe('Supplier', () => {
   it('should be defined', () => {

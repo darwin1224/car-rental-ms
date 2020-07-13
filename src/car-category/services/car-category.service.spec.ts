@@ -1,4 +1,4 @@
-import { CarCategory } from '@app/car-category/models/car-category';
+import { CarCategory } from '@app/car-category/models/car-category.model';
 import { CarCategoryService } from '@app/car-category/services/car-category.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';

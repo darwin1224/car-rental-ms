@@ -18,6 +18,7 @@
       "@nestjs/typeorm",
       "@nestjs/platform-express",
       "@nestjs/config",
+      "@nestjs/swagger",
       "nestjs-typeorm-paginate",
       "typeorm",
       "class-transformer",

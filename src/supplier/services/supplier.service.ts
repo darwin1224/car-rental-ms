@@ -1,5 +1,5 @@
 import { SupplierDto } from '@app/supplier/dtos/supplier.dto';
-import { Supplier } from '@app/supplier/models/supplier';
+import { Supplier } from '@app/supplier/models/supplier.model';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {

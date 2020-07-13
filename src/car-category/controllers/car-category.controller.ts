@@ -1,5 +1,5 @@
 import { CarCategoryDto } from '@app/car-category/dtos/car-category.dto';
-import { CarCategory } from '@app/car-category/models/car-category';
+import { CarCategory } from '@app/car-category/models/car-category.model';
 import { CarCategoryService } from '@app/car-category/services/car-category.service';
 import {
   Body,
@@ -14,8 +14,16 @@ import {
   Query,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import {
+  ApiBadRequestResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Pagination } from 'nestjs-typeorm-paginate';
 
+@ApiTags('car-category')
 @Controller('car-categories')
 export class CarCategoryController {
   constructor(
@@ -23,6 +31,8 @@ export class CarCategoryController {
     private readonly configService: ConfigService,
   ) {}
 
+  @ApiQuery({ name: 'page', example: 1, required: false })
+  @ApiQuery({ name: 'limit', example: 10, required: false })
   @Get()
   async index(
     @Query('page') page = 1,
@@ -35,6 +45,7 @@ export class CarCategoryController {
     });
   }
 
+  @ApiNotFoundResponse({ description: 'Not found exception response.' })
   @Get(':id(\\d+)')
   async show(@Param('id') id: number): Promise<CarCategory> {
     const carCategory = await this.carCategoryService.getCarCategoryById(id);
@@ -42,11 +53,14 @@ export class CarCategoryController {
     return carCategory;
   }
 
+  @ApiBadRequestResponse({ description: 'Request body validation errors.' })
   @Post()
   async store(@Body() carCategoryDto: CarCategoryDto): Promise<CarCategory> {
     return this.carCategoryService.insertCarCategory(carCategoryDto);
   }
 
+  @ApiBadRequestResponse({ description: 'Request body validation errors.' })
+  @ApiNotFoundResponse({ description: 'Not found exception response.' })
   @Put(':id(\\d+)')
   async update(
     @Param('id') id: number,
@@ -60,6 +74,8 @@ export class CarCategoryController {
     return { ...carCategory, ...carCategoryDto };
   }
 
+  @ApiNoContentResponse({ description: 'No content http response.' })
+  @ApiNotFoundResponse({ description: 'Not found exception response.' })
   @Delete(':id(\\d+)')
   @HttpCode(204)
   async destroy(@Param('id') id: number): Promise<void> {

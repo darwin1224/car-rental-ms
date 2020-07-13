@@ -1,4 +1,4 @@
-import { Supplier } from '@app/supplier/models/supplier';
+import { Supplier } from '@app/supplier/models/supplier.model';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import * as paginationRepositoryMock from 'nestjs-typeorm-paginate';

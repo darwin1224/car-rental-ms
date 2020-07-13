@@ -1,4 +1,4 @@
-import { CarCategory } from '@app/car-category/models/car-category';
+import { CarCategory } from '@app/car-category/models/car-category.model';
 import { IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class CarCategoryDto implements Partial<CarCategory> {

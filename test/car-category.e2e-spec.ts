@@ -1,5 +1,5 @@
 import { CarCategoryModule } from '@app/car-category/car-category.module';
-import { CarCategory } from '@app/car-category/models/car-category';
+import { CarCategory } from '@app/car-category/models/car-category.model';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';

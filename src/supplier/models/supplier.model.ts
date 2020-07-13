@@ -23,14 +23,14 @@ export class Supplier {
     nullable: true,
     default: null,
   })
-  phoneNumber!: string;
+  phoneNumber?: string;
 
   @Column({ name: 'address', type: 'text', nullable: true, default: null })
-  address!: string;
+  address?: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt!: string;
+  createdAt?: string;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt!: string;
+  updatedAt?: string;
 }

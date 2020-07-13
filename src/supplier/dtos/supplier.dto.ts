@@ -1,4 +1,4 @@
-import { Supplier } from '@app/supplier/models/supplier';
+import { Supplier } from '@app/supplier/models/supplier.model';
 import {
   IsNotEmpty,
   IsOptional,
@@ -16,9 +16,9 @@ export class SupplierDto implements Partial<Supplier> {
   @IsOptional()
   @IsString()
   @MaxLength(50)
-  phoneNumber!: string;
+  phoneNumber?: string;
 
   @IsOptional()
   @IsString()
-  address!: string;
+  address?: string;
 }

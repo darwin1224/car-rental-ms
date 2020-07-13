@@ -1,6 +1,6 @@
 import { CarCategoryModule } from '@app/car-category/car-category.module';
-import { CarCategory } from '@app/car-category/models/car-category';
-import { Supplier } from '@app/supplier/models/supplier';
+import { CarCategory } from '@app/car-category/models/car-category.model';
+import { Supplier } from '@app/supplier/models/supplier.model';
 import { SupplierModule } from '@app/supplier/supplier.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';

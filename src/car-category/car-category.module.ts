@@ -1,4 +1,4 @@
-import { CarCategory } from '@app/car-category/models/car-category';
+import { CarCategory } from '@app/car-category/models/car-category.model';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarCategoryController } from './controllers/car-category.controller';
