@@ -1,8 +1,17 @@
+sudo: required
+
 language: node_js
 
 node_js:
   - 12
   - 10
+
+services:
+  - docker
+
+before_install:
+  - docker pull postgres:latest
+  - docker run -d --name database -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=car_rental_ms_test -p 5432:5432 postgres:latest
 
 install:
   - yarn install
@@ -11,4 +20,8 @@ script:
   - yarn format
   - yarn lint
   - yarn test:unit
+  - yarn test:e2e
   - yarn build
+
+after_script:
+  - docker rm -f database
