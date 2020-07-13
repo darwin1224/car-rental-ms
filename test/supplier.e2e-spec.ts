@@ -55,6 +55,29 @@ describe('SupplierController (e2e)', () => {
     expect(expectedBody.items.length).toEqual(0);
   });
 
+  it('/v1/api/suppliers (POST) should throw bad request exception when request body is empty', async () => {
+    const { status, body } = await request(app.getHttpServer())
+      .post('/v1/api/suppliers')
+      .set('Content-Type', 'application/json')
+      .send();
+
+    expect(status).toEqual(400);
+    expect(typeof body === 'object').toEqual(true);
+    expect(Object.keys(body).sort()).toEqual(
+      ['error', 'statusCode', 'message'].sort(),
+    );
+    expect(body.error).toEqual('Bad Request');
+    expect(body.statusCode).toEqual(400);
+    expect(Array.isArray(body.message)).toEqual(true);
+    [
+      'name must be longer than or equal to 2 characters',
+      'name must be a string',
+      'name should not be empty',
+    ].forEach((errorMessage, index) => {
+      expect(errorMessage).toEqual(body.message[index]);
+    });
+  });
+
   it('/v1/api/suppliers (POST)', async () => {
     const { status, body } = await request(app.getHttpServer())
       .post('/v1/api/suppliers')
@@ -150,6 +173,29 @@ describe('SupplierController (e2e)', () => {
     expect(body.statusCode).toEqual(404);
     expect(body.error).toEqual('Not Found');
     expect(body.message).toEqual('Supplier not found');
+  });
+
+  it('/v1/api/suppliers/:id (PUT) should throw bad request exception when request body is empty', async () => {
+    const { status, body } = await request(app.getHttpServer())
+      .put('/v1/api/suppliers/1')
+      .set('Content-Type', 'application/json')
+      .send();
+
+    expect(status).toEqual(400);
+    expect(typeof body === 'object').toEqual(true);
+    expect(Object.keys(body).sort()).toEqual(
+      ['error', 'statusCode', 'message'].sort(),
+    );
+    expect(body.error).toEqual('Bad Request');
+    expect(body.statusCode).toEqual(400);
+    expect(Array.isArray(body.message)).toEqual(true);
+    [
+      'name must be longer than or equal to 2 characters',
+      'name must be a string',
+      'name should not be empty',
+    ].forEach((errorMessage, index) => {
+      expect(errorMessage).toEqual(body.message[index]);
+    });
   });
 
   it('/v1/api/suppliers/:id (PUT)', async () => {
