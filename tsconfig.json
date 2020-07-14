@@ -20,6 +20,7 @@
       "@nestjs/config",
       "@nestjs/swagger",
       "@nestjs/passport",
+      "@nestjs/jwt",
       "nestjs-typeorm-paginate",
       "typeorm",
       "class-transformer",
@@ -27,7 +28,8 @@
       "@types/node",
       "@types/jest",
       "@types/supertest",
-      "@types/bcryptjs"
+      "@types/bcryptjs",
+      "@types/passport-jwt"
     ],
     "paths": {
       "@app/*": ["./src/*"]

@@ -1,9 +1,10 @@
-import { CarCategoryModule } from '@app/car-category/car-category.module';
-import { CarCategory } from '@app/car-category/models/car-category.model';
-import { Supplier } from '@app/supplier/models/supplier.model';
-import { SupplierModule } from '@app/supplier/supplier.module';
-import { User } from '@app/user/models/user.model';
-import { UserModule } from '@app/user/user.module';
+import { AuthModule } from '@app/modules/auth/auth.module';
+import { CarCategoryModule } from '@app/modules/car-category/car-category.module';
+import { CarCategory } from '@app/modules/car-category/models/car-category.model';
+import { Supplier } from '@app/modules/supplier/models/supplier.model';
+import { SupplierModule } from '@app/modules/supplier/supplier.module';
+import { User } from '@app/modules/user/models/user.model';
+import { UserModule } from '@app/modules/user/user.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -29,6 +30,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     SupplierModule,
     CarCategoryModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

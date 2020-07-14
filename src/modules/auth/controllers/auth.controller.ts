@@ -1,0 +1,45 @@
+import { LoginDto } from '@app/modules/auth/dtos/login.dto';
+import { UserService } from '@app/modules/user/services/user.service';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import bcrypt from 'bcryptjs';
+
+export interface JwtResponse {
+  accessToken: string;
+}
+
+@ApiTags('auth')
+@Controller('auth')
+export class AuthController {
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  @ApiUnauthorizedResponse({ description: 'Unauthorized exception response.' })
+  @Post('login')
+  @HttpCode(200)
+  async login(@Body() loginDto: LoginDto): Promise<JwtResponse> {
+    const user = await this.userService.getUserByUsername(loginDto.username);
+    if (!user) throw new UnauthorizedException('Authentication failed');
+
+    if (!bcrypt.compareSync(loginDto.password, user.password)) {
+      throw new UnauthorizedException('Authentication failed');
+    }
+
+    return {
+      accessToken: this.jwtService.sign({
+        name: user.name,
+        username: user.username,
+        role: user.role,
+      }),
+    };
+  }
+}
