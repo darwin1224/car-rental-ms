@@ -19,28 +19,30 @@ async function bootstrap() {
   app.setGlobalPrefix('/v1/api');
   app.useGlobalPipes(new ValidationPipe());
 
-  SwaggerModule.setup(
-    'api',
-    app,
-    SwaggerModule.createDocument(
+  process.env.NODE_ENV !== 'production' &&
+    SwaggerModule.setup(
+      'api',
       app,
-      new DocumentBuilder()
-        .setTitle('Car Rental Management System')
-        .setDescription('API documentation for car rental management system.')
-        .setVersion('0.1.0')
-        .setContact(
-          'Darwin',
-          'https://twitter.com/darwinblacks',
-          'darwinblacks@gmail.com',
-        )
-        .setLicense('MIT License', 'https://opensource.org/licenses/MIT')
-        .addServer(
-          app.get(ConfigService).get('APP_BASE_URL') || 'http://localhost:3000',
-        )
-        .build(),
-      { ignoreGlobalPrefix: true },
-    ),
-  );
+      SwaggerModule.createDocument(
+        app,
+        new DocumentBuilder()
+          .setTitle('Car Rental Management System')
+          .setDescription('API documentation for car rental management system.')
+          .setVersion('0.1.0')
+          .setContact(
+            'Darwin',
+            'https://twitter.com/darwinblacks',
+            'darwinblacks@gmail.com',
+          )
+          .setLicense('MIT License', 'https://opensource.org/licenses/MIT')
+          .addServer(
+            app.get(ConfigService).get('APP_BASE_URL') ||
+              'http://localhost:3000',
+          )
+          .build(),
+        { ignoreGlobalPrefix: true },
+      ),
+    );
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
