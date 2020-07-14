@@ -19,13 +19,15 @@
       "@nestjs/platform-express",
       "@nestjs/config",
       "@nestjs/swagger",
+      "@nestjs/passport",
       "nestjs-typeorm-paginate",
       "typeorm",
       "class-transformer",
       "class-validator",
       "@types/node",
       "@types/jest",
-      "@types/supertest"
+      "@types/supertest",
+      "@types/bcryptjs"
     ],
     "paths": {
       "@app/*": ["./src/*"]
