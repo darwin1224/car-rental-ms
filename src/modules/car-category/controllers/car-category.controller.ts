@@ -1,4 +1,6 @@
 import { Roles } from '@app/decorators/roles.decorator';
+import { AuthenticateGuard } from '@app/guards/authenticate.guard';
+import { AuthorizeGuard } from '@app/guards/authorize.guard';
 import { CarCategoryDto } from '@app/modules/car-category/dtos/car-category.dto';
 import { CarCategory } from '@app/modules/car-category/models/car-category.model';
 import { CarCategoryService } from '@app/modules/car-category/services/car-category.service';
@@ -13,6 +15,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -26,6 +29,7 @@ import { Pagination } from 'nestjs-typeorm-paginate';
 
 @ApiTags('car-category')
 @Controller('car-categories')
+@UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class CarCategoryController {
   constructor(
     private readonly carCategoryService: CarCategoryService,
