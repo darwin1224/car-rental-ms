@@ -28,9 +28,8 @@ export class AuthController {
   @HttpCode(200)
   async login(@Body() loginDto: LoginDto): Promise<JwtResponse> {
     const user = await this.userService.getUserByUsername(loginDto.username);
-    if (!user) throw new UnauthorizedException('Authentication failed');
 
-    if (!bcrypt.compareSync(loginDto.password, user.password)) {
+    if (!user || !bcrypt.compareSync(loginDto.password, user.password)) {
       throw new UnauthorizedException('Authentication failed');
     }
 
