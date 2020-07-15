@@ -1,6 +1,11 @@
+import { AuthenticateGuard } from '@app/guards/authenticate.guard';
 import { Supplier } from '@app/modules/supplier/models/supplier.model';
 import { SupplierModule } from '@app/modules/supplier/supplier.module';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import {
+  ExecutionContext,
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -30,7 +35,19 @@ describe('SupplierController (e2e)', () => {
         }),
         SupplierModule,
       ],
-    }).compile();
+    })
+      .overrideGuard(AuthenticateGuard)
+      .useValue({
+        canActivate: (context: ExecutionContext) => {
+          context.switchToHttp().getRequest().user = {
+            name: 'Administrator',
+            username: 'admin',
+            role: 'admin',
+          };
+          return true;
+        },
+      })
+      .compile();
 
     await getConnection().synchronize(true);
 
