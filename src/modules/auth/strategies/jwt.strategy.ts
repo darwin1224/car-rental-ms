@@ -13,7 +13,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate(payload: User): Partial<User> {
+  validate(
+    payload: Pick<User, 'name' | 'username' | 'role'>,
+  ): Pick<User, 'name' | 'username' | 'role'> {
     return {
       name: payload.name,
       username: payload.username,
