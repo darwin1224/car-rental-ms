@@ -110,6 +110,38 @@ describe('UserService', () => {
     );
   });
 
+  it('getUserByUsername()', async () => {
+    jest.spyOn(userRepository, 'findOne').mockImplementationOnce(userDto => {
+      return Promise.resolve({
+        id: 1,
+        name: 'Administrator',
+        username: userDto?.username,
+        password: '123456',
+        role: 'admin',
+        createdAt: '2020-07-12T02:41:24.799Z',
+        updatedAt: '2020-07-12T02:41:24.799Z',
+      } as User);
+    });
+
+    const expected = (await userService.getUserByUsername('admin')) as User;
+
+    expect(userRepository.findOne).toHaveBeenCalledTimes(1);
+    expect(userRepository.findOne).toHaveBeenCalledWith({ username: 'admin' });
+    expect(typeof expected === 'object').toEqual(true);
+    expect(Object.keys(expected).sort()).toEqual(
+      [
+        'id',
+        'name',
+        'username',
+        'password',
+        'role',
+        'createdAt',
+        'updatedAt',
+      ].sort(),
+    );
+    expect(expected.username).toEqual('admin');
+  });
+
   it('getUserById()', async () => {
     jest.spyOn(userRepository, 'findOne').mockImplementationOnce(id => {
       return Promise.resolve({
