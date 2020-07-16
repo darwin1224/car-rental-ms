@@ -9,8 +9,8 @@ import {
 
 @Entity('car_categories')
 export class CarCategory {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column({ name: 'name', type: 'varchar', length: 30, nullable: false })
   @Index({ unique: true })

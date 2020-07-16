@@ -4,6 +4,7 @@ import { AuthorizeGuard } from '@app/guards/authorize.guard';
 import { CarCategoryDto } from '@app/modules/car-category/dtos/car-category.dto';
 import { CarCategory } from '@app/modules/car-category/models/car-category.model';
 import { CarCategoryService } from '@app/modules/car-category/services/car-category.service';
+import { uuidRegex } from '@app/utils/uuid-regex.util';
 import {
   Body,
   Controller,
@@ -54,9 +55,9 @@ export class CarCategoryController {
   }
 
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Get(':id(\\d+)')
+  @Get(`:id(${uuidRegex})`)
   @Roles('admin')
-  async show(@Param('id') id: number): Promise<CarCategory> {
+  async show(@Param('id') id: string): Promise<CarCategory> {
     const carCategory = await this.carCategoryService.getCarCategoryById(id);
     if (!carCategory) throw new NotFoundException('Car category not found');
     return carCategory;
@@ -71,10 +72,10 @@ export class CarCategoryController {
 
   @ApiBadRequestResponse({ description: 'Request body validation errors.' })
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Put(':id(\\d+)')
+  @Put(`:id(${uuidRegex})`)
   @Roles('admin')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() carCategoryDto: CarCategoryDto,
   ): Promise<CarCategory> {
     const carCategory = await this.carCategoryService.getCarCategoryById(id);
@@ -87,10 +88,10 @@ export class CarCategoryController {
 
   @ApiNoContentResponse({ description: 'No content http response.' })
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Delete(':id(\\d+)')
+  @Delete(`:id(${uuidRegex})`)
   @Roles('admin')
   @HttpCode(204)
-  async destroy(@Param('id') id: number): Promise<void> {
+  async destroy(@Param('id') id: string): Promise<void> {
     const carCategory = await this.carCategoryService.getCarCategoryById(id);
     if (!carCategory) throw new NotFoundException('Car category not found');
 

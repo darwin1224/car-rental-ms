@@ -22,7 +22,7 @@ export class CarCategoryService {
     return paginate(this.carCategoryRepository, paginationOptions);
   }
 
-  getCarCategoryById(id: number): Promise<CarCategory | undefined> {
+  getCarCategoryById(id: string): Promise<CarCategory | undefined> {
     return this.carCategoryRepository.findOne(id);
   }
 
@@ -31,13 +31,13 @@ export class CarCategoryService {
   }
 
   updateCarCategory(
-    id: number,
+    id: string,
     carCategoryDto: CarCategoryDto,
   ): Promise<UpdateResult> {
     return this.carCategoryRepository.update(id, carCategoryDto);
   }
 
-  deleteCarCategory(id: number): Promise<DeleteResult> {
+  deleteCarCategory(id: string): Promise<DeleteResult> {
     return this.carCategoryRepository.delete(id);
   }
 }
