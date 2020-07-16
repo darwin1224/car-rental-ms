@@ -1,6 +1,8 @@
 import { AuthModule } from '@app/modules/auth/auth.module';
 import { CarCategoryModule } from '@app/modules/car-category/car-category.module';
 import { CarCategory } from '@app/modules/car-category/models/car-category.model';
+import { CarModule } from '@app/modules/car/car.module';
+import { Car } from '@app/modules/car/models/car.model';
 import { Supplier } from '@app/modules/supplier/models/supplier.model';
 import { SupplierModule } from '@app/modules/supplier/supplier.module';
 import { User } from '@app/modules/user/models/user.model';
@@ -21,7 +23,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Supplier, CarCategory, User],
+        entities: [Supplier, CarCategory, User, Car],
         synchronize: true,
         logging: process.env.NODE_ENV !== 'production',
       }),
@@ -31,6 +33,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     CarCategoryModule,
     UserModule,
     AuthModule,
+    CarModule,
   ],
 })
 export class AppModule {}
