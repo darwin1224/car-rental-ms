@@ -34,7 +34,7 @@ describe('CarCategoryService', () => {
         return Promise.resolve({
           items: [
             {
-              id: 1,
+              id: '120bbafd-f26b-4094-8636-65e0aed6d396',
               name: 'big',
               displayName: 'Big',
               createdAt: '2020-07-12T02:41:24.799Z',
@@ -107,7 +107,7 @@ describe('CarCategoryService', () => {
   it('getCarCategoryById()', async () => {
     jest.spyOn(carCategoryRepository, 'findOne').mockImplementationOnce(id => {
       return Promise.resolve({
-        id: id as number,
+        id: id as string,
         name: 'big',
         displayName: 'Big',
         createdAt: '2020-07-12T02:41:24.799Z',
@@ -116,16 +116,18 @@ describe('CarCategoryService', () => {
     });
 
     const expected = (await carCategoryService.getCarCategoryById(
-      1,
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
     )) as CarCategory;
 
     expect(carCategoryRepository.findOne).toHaveBeenCalledTimes(1);
-    expect(carCategoryRepository.findOne).toHaveBeenCalledWith(1);
+    expect(carCategoryRepository.findOne).toHaveBeenCalledWith(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['id', 'name', 'displayName', 'createdAt', 'updatedAt'].sort(),
     );
-    expect(expected.id).toEqual(1);
+    expect(expected.id).toEqual('120bbafd-f26b-4094-8636-65e0aed6d396');
   });
 
   it('insertCarCategory()', async () => {
@@ -134,7 +136,7 @@ describe('CarCategoryService', () => {
       .mockImplementationOnce(carCategoryDto => {
         return Promise.resolve({
           ...carCategoryDto,
-          id: 2,
+          id: '120bbafd-f26b-4094-8636-65e0aed6d396',
           createdAt: '2020-07-12T02:41:24.799Z',
           updatedAt: '2020-07-12T02:41:24.799Z',
         } as CarCategory);
@@ -170,13 +172,13 @@ describe('CarCategoryService', () => {
       displayName: 'Small',
     };
     const expected = await carCategoryService.updateCarCategory(
-      1,
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
       carCategoryDto,
     );
 
     expect(carCategoryRepository.update).toHaveBeenCalledTimes(1);
     expect(carCategoryRepository.update).toHaveBeenCalledWith(
-      1,
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
       carCategoryDto,
     );
     expect(typeof expected === 'object').toEqual(true);
@@ -194,10 +196,14 @@ describe('CarCategoryService', () => {
       });
     });
 
-    const expected = await carCategoryService.deleteCarCategory(1);
+    const expected = await carCategoryService.deleteCarCategory(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
 
     expect(carCategoryRepository.delete).toHaveBeenCalledTimes(1);
-    expect(carCategoryRepository.delete).toHaveBeenCalledWith(1);
+    expect(carCategoryRepository.delete).toHaveBeenCalledWith(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['affected', 'generatedMaps', 'raw'].sort(),

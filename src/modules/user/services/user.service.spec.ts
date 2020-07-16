@@ -113,7 +113,7 @@ describe('UserService', () => {
   it('getUserByUsername()', async () => {
     jest.spyOn(userRepository, 'findOne').mockImplementationOnce(userDto => {
       return Promise.resolve({
-        id: 1,
+        id: 'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
         name: 'Administrator',
         username: userDto?.username,
         password: '123456',
@@ -145,7 +145,7 @@ describe('UserService', () => {
   it('getUserById()', async () => {
     jest.spyOn(userRepository, 'findOne').mockImplementationOnce(id => {
       return Promise.resolve({
-        id: id as number,
+        id,
         name: 'Administrator',
         username: 'admin',
         password: '123456',
@@ -155,10 +155,14 @@ describe('UserService', () => {
       } as User);
     });
 
-    const expected = (await userService.getUserById(1)) as User;
+    const expected = (await userService.getUserById(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    )) as User;
 
     expect(userRepository.findOne).toHaveBeenCalledTimes(1);
-    expect(userRepository.findOne).toHaveBeenCalledWith(1);
+    expect(userRepository.findOne).toHaveBeenCalledWith(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       [
@@ -171,14 +175,14 @@ describe('UserService', () => {
         'updatedAt',
       ].sort(),
     );
-    expect(expected.id).toEqual(1);
+    expect(expected.id).toEqual('f82c6f2e-0663-4083-90da-bdd1e3825ed4');
   });
 
   it('insertUser()', async () => {
     jest.spyOn(userRepository, 'save').mockImplementationOnce(userDto => {
       return Promise.resolve({
         ...userDto,
-        id: 2,
+        id: 'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
         createdAt: '2020-07-12T02:41:24.799Z',
         updatedAt: '2020-07-12T02:41:24.799Z',
       } as User);
@@ -227,10 +231,16 @@ describe('UserService', () => {
       password: '123456',
       role: 'cashier',
     };
-    const expected = await userService.updateUser(1, userDto);
+    const expected = await userService.updateUser(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+      userDto,
+    );
 
     expect(userRepository.update).toHaveBeenCalledTimes(1);
-    expect(userRepository.update).toHaveBeenCalledWith(1, userDto);
+    expect(userRepository.update).toHaveBeenCalledWith(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+      userDto,
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['affected', 'generatedMaps', 'raw'].sort(),
@@ -246,10 +256,14 @@ describe('UserService', () => {
       });
     });
 
-    const expected = await userService.deleteUser(1);
+    const expected = await userService.deleteUser(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
 
     expect(userRepository.delete).toHaveBeenCalledTimes(1);
-    expect(userRepository.delete).toHaveBeenCalledWith(1);
+    expect(userRepository.delete).toHaveBeenCalledWith(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['affected', 'generatedMaps', 'raw'].sort(),

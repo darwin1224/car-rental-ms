@@ -37,7 +37,7 @@ describe('SupplierController', () => {
         return Promise.resolve({
           items: [
             {
-              id: 1,
+              id: '6e40805f-4381-402a-bb3e-e3d22fa95d19',
               name: 'Andi',
               phoneNumber: '082124234',
               address: 'Medan, Indonesia',
@@ -127,15 +127,19 @@ describe('SupplierController', () => {
         });
       });
 
-    const expected = await supplierController.show(1);
+    const expected = await supplierController.show(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
 
     expect(supplierService.getSupplierById).toHaveBeenCalledTimes(1);
-    expect(supplierService.getSupplierById).toHaveBeenCalledWith(1);
+    expect(supplierService.getSupplierById).toHaveBeenCalledWith(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['id', 'name', 'phoneNumber', 'address', 'createdAt', 'updatedAt'].sort(),
     );
-    expect(expected.id).toEqual(1);
+    expect(expected.id).toEqual('6e40805f-4381-402a-bb3e-e3d22fa95d19');
   });
 
   it('store()', async () => {
@@ -144,7 +148,7 @@ describe('SupplierController', () => {
       .mockImplementationOnce(supplierDto => {
         return Promise.resolve({
           ...supplierDto,
-          id: 2,
+          id: '6e40805f-4381-402a-bb3e-e3d22fa95d19',
           createdAt: '2020-07-12T02:41:24.799Z',
           updatedAt: '2020-07-12T02:41:24.799Z',
         });
@@ -194,12 +198,20 @@ describe('SupplierController', () => {
       phoneNumber: '085257221',
       address: 'Bandung, Indonesia',
     };
-    const expected = await supplierController.update(1, supplierDto);
+    const expected = await supplierController.update(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+      supplierDto,
+    );
 
     expect(supplierService.getSupplierById).toHaveBeenCalledTimes(1);
-    expect(supplierService.getSupplierById).toHaveBeenCalledWith(1);
+    expect(supplierService.getSupplierById).toHaveBeenCalledWith(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
     expect(supplierService.updateSupplier).toHaveBeenCalledTimes(1);
-    expect(supplierService.updateSupplier).toHaveBeenCalledWith(1, supplierDto);
+    expect(supplierService.updateSupplier).toHaveBeenCalledWith(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+      supplierDto,
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['id', 'name', 'phoneNumber', 'address', 'createdAt', 'updatedAt'].sort(),
@@ -230,12 +242,18 @@ describe('SupplierController', () => {
       });
     });
 
-    const expected = await supplierController.destroy(1);
+    const expected = await supplierController.destroy(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
 
     expect(supplierService.getSupplierById).toHaveBeenCalledTimes(1);
-    expect(supplierService.getSupplierById).toHaveBeenCalledWith(1);
+    expect(supplierService.getSupplierById).toHaveBeenCalledWith(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
     expect(supplierService.deleteSupplier).toHaveBeenCalledTimes(1);
-    expect(supplierService.deleteSupplier).toHaveBeenCalledWith(1);
+    expect(supplierService.deleteSupplier).toHaveBeenCalledWith(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
     expect(expected).toBeUndefined();
   });
 });

@@ -113,7 +113,7 @@ describe('SupplierService', () => {
   it('getSupplierById()', async () => {
     jest.spyOn(supplierRepository, 'findOne').mockImplementationOnce(id => {
       return Promise.resolve({
-        id: id as number,
+        id: id as string,
         name: 'Andi',
         phoneNumber: '0824334234',
         address: 'Jakarta, Indonesia',
@@ -122,15 +122,19 @@ describe('SupplierService', () => {
       });
     });
 
-    const expected = (await supplierService.getSupplierById(1)) as Supplier;
+    const expected = (await supplierService.getSupplierById(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    )) as Supplier;
 
     expect(supplierRepository.findOne).toHaveBeenCalledTimes(1);
-    expect(supplierRepository.findOne).toHaveBeenCalledWith(1);
+    expect(supplierRepository.findOne).toHaveBeenCalledWith(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['id', 'name', 'phoneNumber', 'address', 'createdAt', 'updatedAt'].sort(),
     );
-    expect(expected.id).toEqual(1);
+    expect(expected.id).toEqual('6e40805f-4381-402a-bb3e-e3d22fa95d19');
   });
 
   it('insertSupplier()', async () => {
@@ -139,7 +143,7 @@ describe('SupplierService', () => {
       .mockImplementationOnce(supplierDto => {
         return Promise.resolve({
           ...supplierDto,
-          id: 2,
+          id: '6e40805f-4381-402a-bb3e-e3d22fa95d19',
           createdAt: '2020-07-12T02:41:24.799Z',
           updatedAt: '2020-07-12T02:41:24.799Z',
         } as Supplier);
@@ -177,10 +181,16 @@ describe('SupplierService', () => {
       phoneNumber: '085257221',
       address: 'Bandung, Indonesia',
     };
-    const expected = await supplierService.updateSupplier(1, supplierDto);
+    const expected = await supplierService.updateSupplier(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+      supplierDto,
+    );
 
     expect(supplierRepository.update).toHaveBeenCalledTimes(1);
-    expect(supplierRepository.update).toHaveBeenCalledWith(1, supplierDto);
+    expect(supplierRepository.update).toHaveBeenCalledWith(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+      supplierDto,
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['affected', 'generatedMaps', 'raw'].sort(),
@@ -196,10 +206,14 @@ describe('SupplierService', () => {
       });
     });
 
-    const expected = await supplierService.deleteSupplier(1);
+    const expected = await supplierService.deleteSupplier(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
 
     expect(supplierRepository.delete).toHaveBeenCalledTimes(1);
-    expect(supplierRepository.delete).toHaveBeenCalledWith(1);
+    expect(supplierRepository.delete).toHaveBeenCalledWith(
+      '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['affected', 'generatedMaps', 'raw'].sort(),

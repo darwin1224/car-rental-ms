@@ -37,7 +37,7 @@ describe('Auth Controller', () => {
       .spyOn(userService, 'getUserByUsername')
       .mockImplementationOnce(username => {
         return Promise.resolve({
-          id: 1,
+          id: 'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
           name: 'Administrator',
           username,
           password: '123456',

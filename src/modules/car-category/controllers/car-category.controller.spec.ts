@@ -39,7 +39,7 @@ describe('CarCategoryController', () => {
         return Promise.resolve({
           items: [
             {
-              id: 1,
+              id: '120bbafd-f26b-4094-8636-65e0aed6d396',
               name: 'big',
               displayName: 'Big',
               createdAt: '2020-07-12T02:41:24.799Z',
@@ -120,15 +120,19 @@ describe('CarCategoryController', () => {
         });
       });
 
-    const expected = await carCategoryController.show(1);
+    const expected = await carCategoryController.show(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
 
     expect(carCategoryService.getCarCategoryById).toHaveBeenCalledTimes(1);
-    expect(carCategoryService.getCarCategoryById).toHaveBeenCalledWith(1);
+    expect(carCategoryService.getCarCategoryById).toHaveBeenCalledWith(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       ['id', 'name', 'displayName', 'createdAt', 'updatedAt'].sort(),
     );
-    expect(expected.id).toEqual(1);
+    expect(expected.id).toEqual('120bbafd-f26b-4094-8636-65e0aed6d396');
   });
 
   it('store()', async () => {
@@ -137,7 +141,7 @@ describe('CarCategoryController', () => {
       .mockImplementationOnce(carCategoryDto => {
         return Promise.resolve({
           ...carCategoryDto,
-          id: 2,
+          id: '120bbafd-f26b-4094-8636-65e0aed6d396',
           createdAt: '2020-07-12T02:41:24.799Z',
           updatedAt: '2020-07-12T02:41:24.799Z',
         });
@@ -187,13 +191,18 @@ describe('CarCategoryController', () => {
       name: 'small',
       displayName: 'Small',
     };
-    const expected = await carCategoryController.update(1, carCategoryDto);
+    const expected = await carCategoryController.update(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+      carCategoryDto,
+    );
 
     expect(carCategoryService.getCarCategoryById).toHaveBeenCalledTimes(1);
-    expect(carCategoryService.getCarCategoryById).toHaveBeenCalledWith(1);
+    expect(carCategoryService.getCarCategoryById).toHaveBeenCalledWith(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
     expect(carCategoryService.updateCarCategory).toHaveBeenCalledTimes(1);
     expect(carCategoryService.updateCarCategory).toHaveBeenCalledWith(
-      1,
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
       carCategoryDto,
     );
     expect(typeof expected === 'object').toEqual(true);
@@ -226,12 +235,18 @@ describe('CarCategoryController', () => {
         });
       });
 
-    const expected = await carCategoryController.destroy(1);
+    const expected = await carCategoryController.destroy(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
 
     expect(carCategoryService.getCarCategoryById).toHaveBeenCalledTimes(1);
-    expect(carCategoryService.getCarCategoryById).toHaveBeenCalledWith(1);
+    expect(carCategoryService.getCarCategoryById).toHaveBeenCalledWith(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
     expect(carCategoryService.deleteCarCategory).toHaveBeenCalledTimes(1);
-    expect(carCategoryService.deleteCarCategory).toHaveBeenCalledWith(1);
+    expect(carCategoryService.deleteCarCategory).toHaveBeenCalledWith(
+      '120bbafd-f26b-4094-8636-65e0aed6d396',
+    );
     expect(expected).toBeUndefined();
   });
 });

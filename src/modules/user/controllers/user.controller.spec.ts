@@ -38,7 +38,7 @@ describe('UserController', () => {
         return Promise.resolve({
           items: [
             {
-              id: 1,
+              id: 'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
               name: 'Administrator',
               username: 'admin',
               password: '123456',
@@ -129,10 +129,14 @@ describe('UserController', () => {
       } as User);
     });
 
-    const expected = await userController.show(1);
+    const expected = await userController.show(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
 
     expect(userService.getUserById).toHaveBeenCalledTimes(1);
-    expect(userService.getUserById).toHaveBeenCalledWith(1);
+    expect(userService.getUserById).toHaveBeenCalledWith(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       [
@@ -145,14 +149,14 @@ describe('UserController', () => {
         'updatedAt',
       ].sort(),
     );
-    expect(expected.id).toEqual(1);
+    expect(expected.id).toEqual('f82c6f2e-0663-4083-90da-bdd1e3825ed4');
   });
 
   it('store()', async () => {
     jest.spyOn(userService, 'insertUser').mockImplementationOnce(userDto => {
       return Promise.resolve({
         ...userDto,
-        id: 2,
+        id: 'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
         createdAt: '2020-07-12T02:41:24.799Z',
         updatedAt: '2020-07-12T02:41:24.799Z',
       } as User);
@@ -212,12 +216,20 @@ describe('UserController', () => {
       password: '123456',
       role: 'cashier',
     };
-    const expected = await userController.update(1, userDto);
+    const expected = await userController.update(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+      userDto,
+    );
 
     expect(userService.getUserById).toHaveBeenCalledTimes(1);
-    expect(userService.getUserById).toHaveBeenCalledWith(1);
+    expect(userService.getUserById).toHaveBeenCalledWith(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
     expect(userService.updateUser).toHaveBeenCalledTimes(1);
-    expect(userService.updateUser).toHaveBeenCalledWith(1, userDto);
+    expect(userService.updateUser).toHaveBeenCalledWith(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+      userDto,
+    );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
       [
@@ -256,12 +268,18 @@ describe('UserController', () => {
       });
     });
 
-    const expected = await userController.destroy(1);
+    const expected = await userController.destroy(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
 
     expect(userService.getUserById).toHaveBeenCalledTimes(1);
-    expect(userService.getUserById).toHaveBeenCalledWith(1);
+    expect(userService.getUserById).toHaveBeenCalledWith(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
     expect(userService.deleteUser).toHaveBeenCalledTimes(1);
-    expect(userService.deleteUser).toHaveBeenCalledWith(1);
+    expect(userService.deleteUser).toHaveBeenCalledWith(
+      'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
+    );
     expect(expected).toBeUndefined();
   });
 });
