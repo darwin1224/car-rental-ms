@@ -8,7 +8,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import bcrypt from 'bcryptjs';
 
 export interface JwtResponse {
@@ -23,6 +27,7 @@ export class AuthController {
     private readonly jwtService: JwtService,
   ) {}
 
+  @ApiBadRequestResponse({ description: 'Request body validation errors.' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized exception response.' })
   @Post('login')
   @HttpCode(200)
