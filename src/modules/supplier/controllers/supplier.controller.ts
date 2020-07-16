@@ -4,6 +4,7 @@ import { AuthorizeGuard } from '@app/guards/authorize.guard';
 import { SupplierDto } from '@app/modules/supplier/dtos/supplier.dto';
 import { Supplier } from '@app/modules/supplier/models/supplier.model';
 import { SupplierService } from '@app/modules/supplier/services/supplier.service';
+import { uuidRegex } from '@app/utils/uuid-regex.util';
 import {
   Body,
   Controller,
@@ -54,9 +55,9 @@ export class SupplierController {
   }
 
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Get(':id(\\d+)')
+  @Get(`:id(${uuidRegex})`)
   @Roles('admin')
-  async show(@Param('id') id: number): Promise<Supplier> {
+  async show(@Param('id') id: string): Promise<Supplier> {
     const supplier = await this.supplierService.getSupplierById(id);
     if (!supplier) throw new NotFoundException('Supplier not found');
     return supplier;
@@ -71,10 +72,10 @@ export class SupplierController {
 
   @ApiBadRequestResponse({ description: 'Request body validation errors.' })
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Put(':id(\\d+)')
+  @Put(`:id(${uuidRegex})`)
   @Roles('admin')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() supplierDto: SupplierDto,
   ): Promise<Supplier> {
     const supplier = await this.supplierService.getSupplierById(id);
@@ -87,10 +88,10 @@ export class SupplierController {
 
   @ApiNoContentResponse({ description: 'No content http response.' })
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Delete(':id(\\d+)')
+  @Delete(`:id(${uuidRegex})`)
   @Roles('admin')
   @HttpCode(204)
-  async destroy(@Param('id') id: number): Promise<void> {
+  async destroy(@Param('id') id: string): Promise<void> {
     const supplier = await this.supplierService.getSupplierById(id);
     if (!supplier) throw new NotFoundException('Supplier not found');
 

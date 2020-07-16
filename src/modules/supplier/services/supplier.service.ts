@@ -22,7 +22,7 @@ export class SupplierService {
     return paginate(this.supplierRepository, paginationOptions);
   }
 
-  getSupplierById(id: number): Promise<Supplier | undefined> {
+  getSupplierById(id: string): Promise<Supplier | undefined> {
     return this.supplierRepository.findOne(id);
   }
 
@@ -30,11 +30,11 @@ export class SupplierService {
     return this.supplierRepository.save(supplierDto);
   }
 
-  updateSupplier(id: number, supplierDto: SupplierDto): Promise<UpdateResult> {
+  updateSupplier(id: string, supplierDto: SupplierDto): Promise<UpdateResult> {
     return this.supplierRepository.update(id, supplierDto);
   }
 
-  deleteSupplier(id: number): Promise<DeleteResult> {
+  deleteSupplier(id: string): Promise<DeleteResult> {
     return this.supplierRepository.delete(id);
   }
 }

@@ -9,8 +9,8 @@ import {
 
 @Entity('suppliers')
 export class Supplier {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
   @Column({ name: 'name', type: 'varchar', length: 50, nullable: false })
   @Index()
