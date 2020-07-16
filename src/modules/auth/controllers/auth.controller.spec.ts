@@ -5,11 +5,8 @@ import { JwtService } from '@nestjs/jwt';
 import { JWT_MODULE_OPTIONS } from '@nestjs/jwt/dist/jwt.constants';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import bcryptjs from 'bcryptjs';
 import { Repository } from 'typeorm';
-
-jest.mock('bcryptjs', () => ({
-  compareSync: jest.fn(() => true),
-}));
 
 describe('Auth Controller', () => {
   let userService: UserService;
@@ -49,6 +46,8 @@ describe('Auth Controller', () => {
           updatedAt: '2020-07-12T02:41:24.799Z',
         } as User);
       });
+    const mockCompareSync = jest.fn(() => true);
+    (bcryptjs.compareSync as jest.Mock) = mockCompareSync;
     jest.spyOn(jwtService, 'sign').mockImplementationOnce(() => {
       return '123456789';
     });
@@ -60,6 +59,8 @@ describe('Auth Controller', () => {
 
     expect(userService.getUserByUsername).toHaveBeenCalledTimes(1);
     expect(userService.getUserByUsername).toHaveBeenCalledWith('admin');
+    expect(mockCompareSync).toHaveBeenCalledTimes(1);
+    expect(mockCompareSync).toHaveBeenCalledWith('123456', '123456');
     expect(jwtService.sign).toHaveBeenCalledTimes(1);
     expect(jwtService.sign).toHaveBeenCalledWith({
       name: 'Administrator',
