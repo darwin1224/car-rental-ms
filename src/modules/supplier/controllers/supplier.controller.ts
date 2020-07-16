@@ -20,6 +20,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiQuery,
@@ -28,6 +29,7 @@ import {
 import { Pagination } from 'nestjs-typeorm-paginate';
 
 @ApiTags('supplier')
+@ApiBearerAuth()
 @Controller('suppliers')
 @UseGuards(AuthenticateGuard, AuthorizeGuard)
 export class SupplierController {

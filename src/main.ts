@@ -39,6 +39,7 @@ async function bootstrap() {
             app.get(ConfigService).get('APP_BASE_URL') ||
               'http://localhost:3000',
           )
+          .addBearerAuth()
           .build(),
         { ignoreGlobalPrefix: true },
       ),
