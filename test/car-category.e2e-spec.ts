@@ -15,6 +15,7 @@ import { getConnection } from 'typeorm';
 
 describe('CarCategoryController (e2e)', () => {
   let app: INestApplication;
+  let id: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -103,6 +104,7 @@ describe('CarCategoryController (e2e)', () => {
     const expectedBody = body as CarCategory;
 
     expect(status).toEqual(201);
+    id = expectedBody.id;
     expect(typeof expectedBody === 'object').toEqual(true);
     expect(Object.keys(expectedBody).sort()).toEqual(
       ['id', 'name', 'displayName', 'createdAt', 'updatedAt'].sort(),
@@ -153,7 +155,7 @@ describe('CarCategoryController (e2e)', () => {
 
   it('/v1/api/car-categories/:id (GET)', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/v1/api/car-categories/1',
+      `/v1/api/car-categories/${id}`,
     );
     const expectedBody = body as CarCategory;
 
@@ -162,12 +164,12 @@ describe('CarCategoryController (e2e)', () => {
     expect(Object.keys(expectedBody).sort()).toEqual(
       ['id', 'name', 'displayName', 'createdAt', 'updatedAt'].sort(),
     );
-    expect(expectedBody.id).toEqual(1);
+    expect(expectedBody.id).toEqual(id);
   });
 
   it('/v1/api/car-categories/:id (GET) should throw not found exception when car category is not found', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/v1/api/car-categories/99999',
+      '/v1/api/car-categories/11111111-1111-1111-1111-111111111111',
     );
 
     expect(status).toEqual(404);
@@ -182,7 +184,7 @@ describe('CarCategoryController (e2e)', () => {
 
   it('/v1/api/car-categories/:id (PUT) should throw bad request exception when request body is empty', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/car-categories/1')
+      .put(`/v1/api/car-categories/${id}`)
       .set('Content-Type', 'application/json')
       .send();
 
@@ -205,7 +207,7 @@ describe('CarCategoryController (e2e)', () => {
 
   it('/v1/api/car-categories/:id (PUT)', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/car-categories/1')
+      .put(`/v1/api/car-categories/${id}`)
       .set('Content-Type', 'application/json')
       .send({ name: 'small', displayName: 'Small' });
     const expectedBody = body as CarCategory;
@@ -221,7 +223,7 @@ describe('CarCategoryController (e2e)', () => {
 
   it('/v1/api/car-categories/:id (PUT) should throw not found exception when car category is not found', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/car-categories/99999')
+      .put('/v1/api/car-categories/11111111-1111-1111-1111-111111111111')
       .set('Content-Type', 'application/json')
       .send({ name: 'small', displayName: 'Small' });
 
@@ -237,7 +239,7 @@ describe('CarCategoryController (e2e)', () => {
 
   it('/v1/api/car-categories/:id (DELETE)', async () => {
     const { status, body } = await request(app.getHttpServer()).delete(
-      '/v1/api/car-categories/1',
+      `/v1/api/car-categories/${id}`,
     );
 
     expect(status).toEqual(204);
@@ -246,7 +248,7 @@ describe('CarCategoryController (e2e)', () => {
 
   it('/v1/api/car-categories/:id (DELETE) should throw not found exception when car category is not found', async () => {
     const { status, body } = await request(app.getHttpServer()).delete(
-      '/v1/api/car-categories/99999',
+      '/v1/api/car-categories/11111111-1111-1111-1111-111111111111',
     );
 
     expect(status).toEqual(404);

@@ -15,6 +15,7 @@ import { getConnection } from 'typeorm';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
+  let id: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -118,6 +119,7 @@ describe('UserController (e2e)', () => {
     const expectedBody = body as User;
 
     expect(status).toEqual(201);
+    id = expectedBody.id;
     expect(typeof expectedBody === 'object').toEqual(true);
     expect(Object.keys(expectedBody).sort()).toEqual(
       [
@@ -186,7 +188,7 @@ describe('UserController (e2e)', () => {
 
   it('/v1/api/users/:id (GET)', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/v1/api/users/1',
+      `/v1/api/users/${id}`,
     );
     const expectedBody = body as User;
 
@@ -203,12 +205,12 @@ describe('UserController (e2e)', () => {
         'updatedAt',
       ].sort(),
     );
-    expect(expectedBody.id).toEqual(1);
+    expect(expectedBody.id).toEqual(id);
   });
 
   it('/v1/api/users/:id (GET) should throw not found exception when user is not found', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/v1/api/users/99999',
+      '/v1/api/users/11111111-1111-1111-1111-111111111111',
     );
 
     expect(status).toEqual(404);
@@ -223,7 +225,7 @@ describe('UserController (e2e)', () => {
 
   it('/v1/api/users/:id (PUT) should throw bad request exception when request body is empty', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/users/1')
+      .put(`/v1/api/users/${id}`)
       .set('Content-Type', 'application/json')
       .send();
 
@@ -254,7 +256,7 @@ describe('UserController (e2e)', () => {
 
   it('/v1/api/users/:id (PUT)', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/users/1')
+      .put(`/v1/api/users/${id}`)
       .set('Content-Type', 'application/json')
       .send({
         name: 'Budi',
@@ -285,7 +287,7 @@ describe('UserController (e2e)', () => {
 
   it('/v1/api/users/:id (PUT) should throw not found exception when user is not found', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/users/99999')
+      .put('/v1/api/users/11111111-1111-1111-1111-111111111111')
       .set('Content-Type', 'application/json')
       .send({
         name: 'Budi',
@@ -306,7 +308,7 @@ describe('UserController (e2e)', () => {
 
   it('/v1/api/users/:id (DELETE)', async () => {
     const { status, body } = await request(app.getHttpServer()).delete(
-      '/v1/api/users/1',
+      `/v1/api/users/${id}`,
     );
 
     expect(status).toEqual(204);
@@ -315,7 +317,7 @@ describe('UserController (e2e)', () => {
 
   it('/v1/api/users/:id (DELETE) should throw not found exception when user is not found', async () => {
     const { status, body } = await request(app.getHttpServer()).delete(
-      '/v1/api/users/99999',
+      '/v1/api/users/11111111-1111-1111-1111-111111111111',
     );
 
     expect(status).toEqual(404);

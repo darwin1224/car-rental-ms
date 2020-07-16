@@ -15,6 +15,7 @@ import { getConnection } from 'typeorm';
 
 describe('SupplierController (e2e)', () => {
   let app: INestApplication;
+  let id: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -109,6 +110,7 @@ describe('SupplierController (e2e)', () => {
     const expectedBody = body as Supplier;
 
     expect(status).toEqual(201);
+    id = expectedBody.id;
     expect(typeof expectedBody === 'object').toEqual(true);
     expect(Object.keys(expectedBody).sort()).toEqual(
       ['id', 'name', 'phoneNumber', 'address', 'createdAt', 'updatedAt'].sort(),
@@ -167,7 +169,7 @@ describe('SupplierController (e2e)', () => {
 
   it('/v1/api/suppliers/:id (GET)', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/v1/api/suppliers/1',
+      `/v1/api/suppliers/${id}`,
     );
     const expectedBody = body as Supplier;
 
@@ -176,12 +178,12 @@ describe('SupplierController (e2e)', () => {
     expect(Object.keys(expectedBody).sort()).toEqual(
       ['id', 'name', 'phoneNumber', 'address', 'createdAt', 'updatedAt'].sort(),
     );
-    expect(expectedBody.id).toEqual(1);
+    expect(expectedBody.id).toEqual(id);
   });
 
   it('/v1/api/suppliers/:id (GET) should throw not found exception when supplier is not found', async () => {
     const { status, body } = await request(app.getHttpServer()).get(
-      '/v1/api/suppliers/99999',
+      '/v1/api/suppliers/11111111-1111-1111-1111-111111111111',
     );
 
     expect(status).toEqual(404);
@@ -196,7 +198,7 @@ describe('SupplierController (e2e)', () => {
 
   it('/v1/api/suppliers/:id (PUT) should throw bad request exception when request body is empty', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/suppliers/1')
+      .put(`/v1/api/suppliers/${id}`)
       .set('Content-Type', 'application/json')
       .send();
 
@@ -219,7 +221,7 @@ describe('SupplierController (e2e)', () => {
 
   it('/v1/api/suppliers/:id (PUT)', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/suppliers/1')
+      .put(`/v1/api/suppliers/${id}`)
       .set('Content-Type', 'application/json')
       .send({
         name: 'Dito',
@@ -240,7 +242,7 @@ describe('SupplierController (e2e)', () => {
 
   it('/v1/api/suppliers/:id (PUT) should throw not found exception when supplier is not found', async () => {
     const { status, body } = await request(app.getHttpServer())
-      .put('/v1/api/suppliers/99999')
+      .put('/v1/api/suppliers/11111111-1111-1111-1111-111111111111')
       .set('Content-Type', 'application/json')
       .send({
         name: 'Dito',
@@ -260,7 +262,7 @@ describe('SupplierController (e2e)', () => {
 
   it('/v1/api/suppliers/:id (DELETE)', async () => {
     const { status, body } = await request(app.getHttpServer()).delete(
-      '/v1/api/suppliers/1',
+      `/v1/api/suppliers/${id}`,
     );
 
     expect(status).toEqual(204);
@@ -269,7 +271,7 @@ describe('SupplierController (e2e)', () => {
 
   it('/v1/api/suppliers/:id (DELETE) should throw not found exception when supplier is not found', async () => {
     const { status, body } = await request(app.getHttpServer()).delete(
-      '/v1/api/suppliers/99999',
+      '/v1/api/suppliers/11111111-1111-1111-1111-111111111111',
     );
 
     expect(status).toEqual(404);
