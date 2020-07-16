@@ -20,7 +20,7 @@ export class UserService {
     return paginate(this.userRepository, paginationOptions);
   }
 
-  getUserById(id: number): Promise<User | undefined> {
+  getUserById(id: string): Promise<User | undefined> {
     return this.userRepository.findOne(id);
   }
 
@@ -32,11 +32,11 @@ export class UserService {
     return this.userRepository.save(Object.assign(new User(), { ...userDto }));
   }
 
-  updateUser(id: number, userDto: UserDto): Promise<UpdateResult> {
+  updateUser(id: string, userDto: UserDto): Promise<UpdateResult> {
     return this.userRepository.update(id, userDto);
   }
 
-  deleteUser(id: number): Promise<DeleteResult> {
+  deleteUser(id: string): Promise<DeleteResult> {
     return this.userRepository.delete(id);
   }
 }

@@ -4,6 +4,7 @@ import { AuthorizeGuard } from '@app/guards/authorize.guard';
 import { UserDto } from '@app/modules/user/dtos/user.dto';
 import { User } from '@app/modules/user/models/user.model';
 import { UserService } from '@app/modules/user/services/user.service';
+import { uuidRegex } from '@app/utils/uuid-regex.util';
 import {
   Body,
   Controller,
@@ -54,9 +55,9 @@ export class UserController {
   }
 
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Get(':id(\\d+)')
+  @Get(`:id(${uuidRegex})`)
   @Roles('admin')
-  async show(@Param('id') id: number): Promise<User> {
+  async show(@Param('id') id: string): Promise<User> {
     const user = await this.userService.getUserById(id);
     if (!user) throw new NotFoundException('User not found');
     return user;
@@ -71,10 +72,10 @@ export class UserController {
 
   @ApiBadRequestResponse({ description: 'Request body validation errors.' })
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Put(':id(\\d+)')
+  @Put(`:id(${uuidRegex})`)
   @Roles('admin')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() userDto: UserDto,
   ): Promise<User> {
     const user = await this.userService.getUserById(id);
@@ -87,10 +88,10 @@ export class UserController {
 
   @ApiNoContentResponse({ description: 'No content http response.' })
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
-  @Delete(':id(\\d+)')
+  @Delete(`:id(${uuidRegex})`)
   @Roles('admin')
   @HttpCode(204)
-  async destroy(@Param('id') id: number): Promise<void> {
+  async destroy(@Param('id') id: string): Promise<void> {
     const user = await this.userService.getUserById(id);
     if (!user) throw new NotFoundException('User not found');
 
