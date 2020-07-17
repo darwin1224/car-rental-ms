@@ -23,17 +23,32 @@ export class CarService {
   }
 
   getCarById(id: string): Promise<Car | undefined> {
+    return this.carRepository.findOne(id);
+  }
+
+  getCarByIdWithRelationship(id: string): Promise<Car | undefined> {
     return this.carRepository.findOne(id, {
       relations: ['carCategory', 'supplier'],
     });
   }
 
-  insertCar(carDto: CarDto): Promise<Car> {
-    return this.carRepository.save(carDto);
+  insertCar({ carCategoryId, supplierId, price }: CarDto): Promise<Car> {
+    return this.carRepository.save({
+      carCategory: { id: carCategoryId },
+      supplier: { id: supplierId },
+      price,
+    });
   }
 
-  updateCar(id: string, carDto: CarDto): Promise<UpdateResult> {
-    return this.carRepository.update(id, carDto);
+  updateCar(
+    id: string,
+    { carCategoryId, supplierId, price }: CarDto,
+  ): Promise<UpdateResult> {
+    return this.carRepository.update(id, {
+      carCategory: { id: carCategoryId },
+      supplier: { id: supplierId },
+      price,
+    });
   }
 
   deleteCar(id: string): Promise<DeleteResult> {

@@ -1,14 +1,13 @@
-import { Car } from '@app/modules/car/models/car.model';
 import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 
-export class CarDto implements Partial<Car> {
+export class CarDto {
   @IsNotEmpty()
-  @IsUUID('all')
-  carCategory!: string;
+  @IsUUID()
+  carCategoryId!: string;
 
   @IsNotEmpty()
-  @IsUUID('all')
-  supplier!: string;
+  @IsUUID()
+  supplierId!: string;
 
   @IsNotEmpty()
   @IsNumber()

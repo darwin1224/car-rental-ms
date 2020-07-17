@@ -21,7 +21,7 @@ export class Car {
     nullable: false,
   })
   @JoinColumn({ name: 'car_category_id' })
-  carCategory!: string;
+  carCategory!: CarCategory;
 
   @ManyToOne(type => Supplier, {
     onUpdate: 'CASCADE',
@@ -29,7 +29,7 @@ export class Car {
     nullable: false,
   })
   @JoinColumn({ name: 'supplier_id' })
-  supplier!: string;
+  supplier!: Supplier;
 
   @Column({
     name: 'price',

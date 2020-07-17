@@ -58,7 +58,7 @@ export class CarController {
   @Get(`:id(${uuidRegex})`)
   @Roles('admin')
   async show(@Param('id') id: string): Promise<Car> {
-    const car = await this.carService.getCarById(id);
+    const car = await this.carService.getCarByIdWithRelationship(id);
     if (!car) throw new NotFoundException('Car not found');
     return car;
   }
