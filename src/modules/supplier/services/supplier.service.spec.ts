@@ -34,7 +34,7 @@ describe('SupplierService', () => {
         return Promise.resolve({
           items: [
             {
-              id: 1,
+              id: '6e40805f-4381-402a-bb3e-e3d22fa95d19',
               name: 'Andi',
               phoneNumber: '082124234',
               address: 'Medan, Indonesia',

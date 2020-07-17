@@ -32,7 +32,7 @@ describe('UserService', () => {
         return Promise.resolve({
           items: [
             {
-              id: 1,
+              id: 'f82c6f2e-0663-4083-90da-bdd1e3825ed4',
               name: 'Administrator',
               username: 'admin',
               password: '123456',
