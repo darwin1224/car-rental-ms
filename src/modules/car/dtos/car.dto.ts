@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import { IsDecimal, IsNotEmpty, IsUUID } from 'class-validator';
 
 export class CarDto {
   @IsNotEmpty()
@@ -10,6 +10,6 @@ export class CarDto {
   supplierId!: string;
 
   @IsNotEmpty()
-  @IsNumber()
+  @IsDecimal({ decimal_digits: '12' })
   price!: number;
 }
