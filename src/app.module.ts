@@ -7,8 +7,9 @@ import { Supplier } from '@app/modules/supplier/models/supplier.model';
 import { SupplierModule } from '@app/modules/supplier/supplier.module';
 import { User } from '@app/modules/user/models/user.model';
 import { UserModule } from '@app/modules/user/user.module';
-import { Module } from '@nestjs/common';
+import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
@@ -16,6 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
@@ -27,7 +29,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         synchronize: true,
         logging: process.env.NODE_ENV !== 'production',
       }),
+    }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
       inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        max: configService.get('CACHE_MAX'),
+        ttl: configService.get('CACHE_TTL'),
+      }),
     }),
     SupplierModule,
     CarCategoryModule,
@@ -35,5 +44,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     AuthModule,
     CarModule,
   ],
+  providers: [{ provide: APP_INTERCEPTOR, useClass: CacheInterceptor }],
 })
 export class AppModule {}
