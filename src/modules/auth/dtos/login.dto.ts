@@ -1,7 +1,6 @@
-import { User } from '@app/modules/user/models/user.model';
 import { IsNotEmpty, IsString, Length, MinLength } from 'class-validator';
 
-export class LoginDto implements Partial<User> {
+export class LoginDto {
   @IsNotEmpty()
   @IsString()
   @Length(4, 100)

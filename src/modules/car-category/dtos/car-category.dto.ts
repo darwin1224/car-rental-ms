@@ -1,7 +1,6 @@
-import { CarCategory } from '@app/modules/car-category/models/car-category.model';
 import { IsNotEmpty, IsString, Length } from 'class-validator';
 
-export class CarCategoryDto implements Partial<CarCategory> {
+export class CarCategoryDto {
   @IsNotEmpty()
   @IsString()
   @Length(2, 30)

@@ -1,4 +1,3 @@
-import { User } from '@app/modules/user/models/user.model';
 import {
   IsEnum,
   IsNotEmpty,
@@ -7,7 +6,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class UserDto implements Partial<User> {
+export class UserDto {
   @IsNotEmpty()
   @IsString()
   @Length(2, 50)

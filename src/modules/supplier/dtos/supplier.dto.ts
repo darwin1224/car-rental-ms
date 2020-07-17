@@ -1,4 +1,3 @@
-import { Supplier } from '@app/modules/supplier/models/supplier.model';
 import {
   IsNotEmpty,
   IsOptional,
@@ -7,7 +6,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class SupplierDto implements Partial<Supplier> {
+export class SupplierDto {
   @IsNotEmpty()
   @IsString()
   @Length(2, 50)
