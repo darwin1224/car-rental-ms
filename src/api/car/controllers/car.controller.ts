@@ -74,7 +74,10 @@ export class CarController {
   @ApiNotFoundResponse({ description: 'Not found exception response.' })
   @Put(`:id(${uuidRegex})`)
   @Roles('admin')
-  async update(@Param('id') id: string, @Body() carDto: CarDto): Promise<Car> {
+  async update(
+    @Param('id') id: string,
+    @Body() carDto: CarDto,
+  ): Promise<Car & CarDto> {
     const car = await this.carService.getCarById(id);
     if (!car) throw new NotFoundException('Car not found');
 
