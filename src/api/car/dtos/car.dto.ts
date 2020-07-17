@@ -11,5 +11,5 @@ export class CarDto {
 
   @IsNotEmpty()
   @IsDecimal({ decimal_digits: '12' })
-  price!: number;
+  price!: string;
 }

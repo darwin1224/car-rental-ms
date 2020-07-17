@@ -38,7 +38,7 @@ export class Car {
     scale: 2,
     nullable: false,
   })
-  price!: number;
+  price!: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt?: string;
