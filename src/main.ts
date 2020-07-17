@@ -17,7 +17,12 @@ async function bootstrap() {
   app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 50 }));
 
   app.setGlobalPrefix('/v1/api');
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      disableErrorMessages: process.env.NODE_ENV === 'production',
+    }),
+  );
 
   process.env.NODE_ENV !== 'production' &&
     SwaggerModule.setup(
