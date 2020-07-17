@@ -80,6 +80,9 @@ describe('CarService', () => {
     expect(paginationRepositoryMock.paginate).toHaveBeenCalledWith(
       carRepository,
       paginationOptions,
+      {
+        relations: ['carCategory', 'supplier'],
+      },
     );
     expect(Object.keys(expected).sort()).toEqual(
       ['items', 'meta', 'links'].sort(),
@@ -87,6 +90,19 @@ describe('CarService', () => {
     expect(Array.isArray(expected.items)).toEqual(true);
     expected.items.forEach(item => {
       expect(Object.keys(item).sort()).toEqual(
+        [
+          'id',
+          'price',
+          'createdAt',
+          'updatedAt',
+          'carCategory',
+          'supplier',
+        ].sort(),
+      );
+      expect(Object.keys(item.carCategory).sort()).toEqual(
+        ['id', 'name', 'displayName', 'createdAt', 'updatedAt'].sort(),
+      );
+      expect(Object.keys(item.supplier).sort()).toEqual(
         [
           'id',
           'name',
@@ -153,9 +169,25 @@ describe('CarService', () => {
     expect(carRepository.findOne).toHaveBeenCalledTimes(1);
     expect(carRepository.findOne).toHaveBeenCalledWith(
       '6e40805f-4381-402a-bb3e-e3d22fa95d19',
+      {
+        relations: ['carCategory', 'supplier'],
+      },
     );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
+      [
+        'id',
+        'price',
+        'createdAt',
+        'updatedAt',
+        'carCategory',
+        'supplier',
+      ].sort(),
+    );
+    expect(Object.keys(expected.carCategory).sort()).toEqual(
+      ['id', 'name', 'displayName', 'createdAt', 'updatedAt'].sort(),
+    );
+    expect(Object.keys(expected.supplier).sort()).toEqual(
       ['id', 'name', 'phoneNumber', 'address', 'createdAt', 'updatedAt'].sort(),
     );
     expect(expected.id).toEqual('6e40805f-4381-402a-bb3e-e3d22fa95d19');
@@ -172,21 +204,38 @@ describe('CarService', () => {
     });
 
     const carDto = {
-      name: 'Budi',
-      phoneNumber: '0852114342',
-      address: 'Medan, Indonesia',
+      carCategoryId: 'fb35a65b-8a08-43c7-b0f4-4d5024f69554',
+      supplierId: '2157d396-92bc-4434-af8e-d45f75daf640',
+      price: '80000',
     };
     const expected = await carService.insertCar(carDto);
 
     expect(carRepository.save).toHaveBeenCalledTimes(1);
-    expect(carRepository.save).toHaveBeenCalledWith(carDto);
+    expect(carRepository.save).toHaveBeenCalledWith({
+      carCategory: { id: carDto.carCategoryId },
+      supplier: { id: carDto.supplierId },
+      price: carDto.price,
+    });
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
-      ['id', 'name', 'phoneNumber', 'address', 'createdAt', 'updatedAt'].sort(),
+      [
+        'id',
+        'carCategory',
+        'supplier',
+        'price',
+        'createdAt',
+        'updatedAt',
+      ].sort(),
     );
-    expect(expected.name).toEqual('Budi');
-    expect(expected.phoneNumber).toEqual('0852114342');
-    expect(expected.address).toEqual('Medan, Indonesia');
+    expect(expected.carCategory.hasOwnProperty('id')).toEqual(true);
+    expect(expected.supplier.hasOwnProperty('id')).toEqual(true);
+    expect(expected.carCategory.id).toEqual(
+      'fb35a65b-8a08-43c7-b0f4-4d5024f69554',
+    );
+    expect(expected.supplier.id).toEqual(
+      '2157d396-92bc-4434-af8e-d45f75daf640',
+    );
+    expect(expected.price).toEqual('80000');
   });
 
   it('updateCar()', async () => {
@@ -199,9 +248,9 @@ describe('CarService', () => {
     });
 
     const carDto = {
-      name: 'Dito',
-      phoneNumber: '085257221',
-      address: 'Bandung, Indonesia',
+      carCategoryId: 'fb35a65b-8a08-43c7-b0f4-4d5024f69554',
+      supplierId: '2157d396-92bc-4434-af8e-d45f75daf640',
+      price: '100000',
     };
     const expected = await carService.updateCar(
       '6e40805f-4381-402a-bb3e-e3d22fa95d19',
@@ -211,7 +260,11 @@ describe('CarService', () => {
     expect(carRepository.update).toHaveBeenCalledTimes(1);
     expect(carRepository.update).toHaveBeenCalledWith(
       '6e40805f-4381-402a-bb3e-e3d22fa95d19',
-      carDto,
+      {
+        carCategory: { id: carDto.carCategoryId },
+        supplier: { id: carDto.supplierId },
+        price: carDto.price,
+      },
     );
     expect(typeof expected === 'object').toEqual(true);
     expect(Object.keys(expected).sort()).toEqual(
