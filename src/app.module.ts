@@ -1,49 +1,8 @@
-import { AuthModule } from '@app/modules/auth/auth.module';
-import { CarCategoryModule } from '@app/modules/car-category/car-category.module';
-import { CarCategory } from '@app/modules/car-category/models/car-category.model';
-import { CarModule } from '@app/modules/car/car.module';
-import { Car } from '@app/modules/car/models/car.model';
-import { Supplier } from '@app/modules/supplier/models/supplier.model';
-import { SupplierModule } from '@app/modules/supplier/supplier.module';
-import { User } from '@app/modules/user/models/user.model';
-import { UserModule } from '@app/modules/user/user.module';
-import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ApiModule } from '@app/api/api.module';
+import { CoreModule } from '@app/core/core.module';
+import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: Number(configService.get('DB_PORT')),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_NAME'),
-        entities: [Supplier, CarCategory, User, Car],
-        synchronize: true,
-        logging: process.env.NODE_ENV !== 'production',
-      }),
-    }),
-    CacheModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        max: configService.get('CACHE_MAX'),
-        ttl: configService.get('CACHE_TTL'),
-      }),
-    }),
-    SupplierModule,
-    CarCategoryModule,
-    UserModule,
-    AuthModule,
-    CarModule,
-  ],
-  providers: [{ provide: APP_INTERCEPTOR, useClass: CacheInterceptor }],
+  imports: [CoreModule, ApiModule],
 })
 export class AppModule {}

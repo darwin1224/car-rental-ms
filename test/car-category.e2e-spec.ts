@@ -1,6 +1,6 @@
-import { AuthenticateGuard } from '@app/guards/authenticate.guard';
-import { CarCategoryModule } from '@app/modules/car-category/car-category.module';
-import { CarCategory } from '@app/modules/car-category/models/car-category.model';
+import { CarCategoryModule } from '@app/api/car-category/car-category.module';
+import { CarCategory } from '@app/api/car-category/models/car-category.model';
+import { AuthenticateGuard } from '@app/common/guards/authenticate.guard';
 import {
   ExecutionContext,
   INestApplication,

@@ -1,6 +1,6 @@
-import { AuthenticateGuard } from '@app/guards/authenticate.guard';
-import { User } from '@app/modules/user/models/user.model';
-import { UserModule } from '@app/modules/user/user.module';
+import { User } from '@app/api/user/models/user.model';
+import { UserModule } from '@app/api/user/user.module';
+import { AuthenticateGuard } from '@app/common/guards/authenticate.guard';
 import {
   ExecutionContext,
   INestApplication,

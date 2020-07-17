@@ -1,5 +1,5 @@
-import { AuthModule } from '@app/modules/auth/auth.module';
-import { User } from '@app/modules/user/models/user.model';
+import { AuthModule } from '@app/api/auth/auth.module';
+import { User } from '@app/api/user/models/user.model';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';

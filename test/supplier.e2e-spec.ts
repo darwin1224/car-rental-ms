@@ -1,6 +1,6 @@
-import { AuthenticateGuard } from '@app/guards/authenticate.guard';
-import { Supplier } from '@app/modules/supplier/models/supplier.model';
-import { SupplierModule } from '@app/modules/supplier/supplier.module';
+import { Supplier } from '@app/api/supplier/models/supplier.model';
+import { SupplierModule } from '@app/api/supplier/supplier.module';
+import { AuthenticateGuard } from '@app/common/guards/authenticate.guard';
 import {
   ExecutionContext,
   INestApplication,
