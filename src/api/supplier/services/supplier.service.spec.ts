@@ -1,9 +1,9 @@
 import { Supplier } from '@app/api/supplier/models/supplier.model';
+import { SupplierService } from '@app/api/supplier/services/supplier.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import * as paginationRepositoryMock from 'nestjs-typeorm-paginate';
 import { Repository } from 'typeorm';
-import { SupplierService } from './supplier.service';
 
 describe('SupplierService', () => {
   let supplierRepository: Repository<Supplier>;
