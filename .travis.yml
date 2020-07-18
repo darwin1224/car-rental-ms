@@ -18,7 +18,7 @@ script:
   - yarn format
   - yarn lint
   - yarn test:unit --coverage
-  - yarn test:e2e
+  - yarn test:e2e --runInBand
   - yarn build
 
 after_script:
