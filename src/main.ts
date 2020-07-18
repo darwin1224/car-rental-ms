@@ -7,6 +7,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
+import morgan from 'morgan';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -14,6 +15,7 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors();
   app.use(compression());
+  app.use(morgan('combined'));
   app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 50 }));
 
   app.setGlobalPrefix('/v1/api');
