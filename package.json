@@ -13,6 +13,8 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "seed:config": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-seeding/dist/cli.js config",
+    "seed:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-seeding/dist/cli.js seed",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "docs": "compodoc -p tsconfig.json -d docs/references -s",
     "test": "yarn test:unit && yarn test:e2e",
@@ -45,7 +47,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
     "swagger-ui-express": "^4.1.4",
-    "typeorm": "^0.2.25"
+    "typeorm": "^0.2.25",
+    "typeorm-seeding": "^1.6.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.0.1",
@@ -58,6 +61,7 @@
     "@types/compression": "^1.7.0",
     "@types/express": "^4.17.3",
     "@types/express-rate-limit": "^5.0.0",
+    "@types/faker": "^4.1.12",
     "@types/helmet": "^0.0.47",
     "@types/jest": "25.2.3",
     "@types/morgan": "^1.9.1",
