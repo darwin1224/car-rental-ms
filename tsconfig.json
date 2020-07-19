@@ -23,6 +23,7 @@
       "@nestjs/jwt",
       "nestjs-typeorm-paginate",
       "typeorm",
+      "typeorm-seeding",
       "class-transformer",
       "class-validator",
       "@types/node",
