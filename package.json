@@ -23,7 +23,7 @@
     "test:unit": "jest --verbose",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --verbose --config ./test/jest-e2e.json",
-    "heroku-postbuild": "yarn seed:run -s UserSeed -n ormconfig.seed.js"
+    "heroku-postbuild": "yarn schema:drop -f ormconfig.seed.js && yarn schema:sync -f ormconfig.seed.js && yarn seed:run -s UserSeed -n ormconfig.seed.js && yarn build"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
